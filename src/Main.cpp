@@ -1,17 +1,21 @@
+#include <vector>
+#include <cstdint>
 #include <iostream>
 
-#include "include/Bus/Bus.hpp"
+#include "include/CPU/CPU.hpp"
+#include "include/CPU/Instructions.hpp"
 
 int main()
 {
-    Bus bus;
-    bus.writeDataBus(0x0010, 0xFF);
-    bus.writeDataBus(0x0011, 0xFB);
+    CPU cpu;
 
-    auto value1 = bus.readDataBus(0x10);
-    auto value2 = bus.readDataBus(0x11);
+    const std::vector<std::uint8_t> code = {
+        (int)Instructions::NOP,
+        (int)Instructions::HLT,
+    };
 
-    printf("Value from Bus: %04X\n", value1 << 8 | value2);
+    cpu.loadToMemory(code);
+    cpu.step();
 
     return EXIT_SUCCESS;
 }

@@ -16,6 +16,7 @@ public:
 
     void run();
     void step();
+    void reset();
     void loadToMemory(const std::vector<std::uint8_t>&);
 private:
     void fetch();
@@ -30,5 +31,7 @@ private:
     Status status;
     Registers registers;
     Instructions instruction;
+private:
+    std::uint8_t opcode;
     std::map<Instructions, void(CPU::*)()> opcode_t;
 };
