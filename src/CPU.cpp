@@ -42,7 +42,7 @@ void CPU::loadToMemory(const std::vector<std::uint8_t>& code)
     auto PC = registers.PC;
     for (std::size_t i = 0; i < code.size(); ++i)
     {
-        bus.writeDataBus(PC + i, code.at(i));
+        bus.write8(PC + i, code.at(i));
     }
 }
 
@@ -75,7 +75,7 @@ void CPU::step()
 
 void CPU::fetch()
 {
-   opcode = bus.readDataBus(registers.PC++);
+   opcode = bus.read8(registers.PC++);
 }
 
 void CPU::decode()
@@ -95,7 +95,7 @@ void CPU::NOP() {}
 
 void CPU::LDI()
 {
-    auto value = bus.readDataBus(registers.PC + 1) << 8 | bus.readDataBus(registers.PC);
+    auto value = bus.read16(registers.PC);
     registers.A = value;
     registers.PC += 2;
 }
