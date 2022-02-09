@@ -15,6 +15,8 @@ CPU::CPU()
     reset();
 
     opcode_t[Instructions::NOP] = &CPU::NOP;
+    opcode_t[Instructions::LDI] = &CPU::LDI;
+    opcode_t[Instructions::RET] = &CPU::RET;
     opcode_t[Instructions::HLT] = &CPU::HLT;
 }
 
@@ -90,6 +92,18 @@ void CPU::execute()
 }
 
 void CPU::NOP() {}
+
+void CPU::LDI()
+{
+    auto value = bus.readDataBus(registers.PC + 1) << 8 | bus.readDataBus(registers.PC);
+    registers.A = value;
+    registers.PC += 2;
+}
+
+void CPU::RET()
+{
+    printf("Register A: %02X\n", registers.A);
+}
 
 void CPU::HLT()
 {

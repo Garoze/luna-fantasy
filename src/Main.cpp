@@ -10,6 +10,8 @@ int main()
 
     const std::vector<std::uint8_t> code = {
         (int)Instructions::NOP,
+        (int)Instructions::LDI, 0xCD, 0xAB,
+        (int)Instructions::RET,
         (int)Instructions::HLT,
     };
 

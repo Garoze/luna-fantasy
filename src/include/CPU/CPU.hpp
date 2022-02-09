@@ -25,6 +25,8 @@ private:
     void execute();
 private:
     void NOP();
+    void LDI();
+    void RET();
     void HLT();
 private:
     Bus bus;
