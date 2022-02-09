@@ -3,7 +3,6 @@
 #include <iostream>
 
 #include "include/CPU/CPU.hpp"
-#include "include/CPU/Instructions.hpp"
 
 int main()
 {
