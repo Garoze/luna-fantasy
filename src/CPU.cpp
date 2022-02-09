@@ -44,6 +44,11 @@ void CPU::loadToMemory(const std::vector<std::uint8_t>& code)
     }
 }
 
+void CPU::debugMemory(std::uint16_t address, int offset)
+{
+    bus.debugMemory(address, offset);
+}
+
 void CPU::run()
 {
     while (status.running)

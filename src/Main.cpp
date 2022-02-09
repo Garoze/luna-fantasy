@@ -15,8 +15,9 @@ int main()
     };
 
     cpu.loadToMemory(code);
-    // cpu.step();
-    cpu.run();
+    cpu.debugMemory(0x0000);
+    cpu.step();
+    // cpu.run();
 
     return EXIT_SUCCESS;
 }
