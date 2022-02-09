@@ -44,7 +44,15 @@ void CPU::loadToMemory(const std::vector<std::uint8_t>& code)
     }
 }
 
-// void CPU::run();
+void CPU::run()
+{
+    while (status.running)
+    {
+        fetch();
+        decode();
+        execute();
+    }
+}
 
 void CPU::step()
 {
