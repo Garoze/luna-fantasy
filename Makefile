@@ -7,16 +7,17 @@ SRC    := src
 BIN    := bin
 BUILD  := build
 
-SOURCE := $(shell find $(SRC/**) -type f -regex ".*\.cpp")
-OBJECT := $(patsubst %, $(BUILD)/%, $(notdir $(SOURCE:.cpp=.cpp.o)))
+SOURCE  := $(shell find $(SRC/**) -type f -regex ".*\.cpp")
+HEADERS := $(shell find $(SRC/include/**) -type f -regex ".*\.hpp")
+OBJECT  := $(patsubst %, $(BUILD)/%, $(notdir $(SOURCE:.cpp=.cpp.o)))
 
-.PHONY: all clean
+.PHONY: default all clean
 
 TARGET := cpu
 
 all: $(TARGET)
 
-$(BUILD)/%.cpp.o: $(SRC)/%.cpp
+$(BUILD)/%.cpp.o: $(SRC)/%.cpp $(HEADERS)
 	@echo "Building: $@"; $(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 $(TARGET): $(OBJECT)

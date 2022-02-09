@@ -18,7 +18,7 @@ public:
     void step();
     void reset();
     void loadToMemory(const std::vector<std::uint8_t>&);
-    void debugMemory(std::uint16_t address, int offset = 10);
+    void debugMemory(std::uint16_t address, int offset = 20);
 private:
     void fetch();
     void decode();
