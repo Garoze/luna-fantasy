@@ -8,6 +8,8 @@ enum class Instructions : std::uint8_t
     LDI,
     LDA,
     LDS,
+    STA,
+    STS,
     INC,
     DEC,
     PSH,

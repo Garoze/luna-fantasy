@@ -18,6 +18,8 @@ CPU::CPU()
     opcode_t[Instructions::LDI] = &CPU::LDI;
     opcode_t[Instructions::LDA] = &CPU::LDA;
     opcode_t[Instructions::LDS] = &CPU::LDS;
+    opcode_t[Instructions::STA] = &CPU::STA;
+    opcode_t[Instructions::STS] = &CPU::STS;
     opcode_t[Instructions::INC] = &CPU::INC;
     opcode_t[Instructions::DEC] = &CPU::DEC;
     opcode_t[Instructions::PSH] = &CPU::PSH;
@@ -117,6 +119,22 @@ void CPU::LDS()
 {
     registers.A = bus.read16(registers.SP);
     registers.SP += 2;
+}
+
+void CPU::STA()
+{
+    auto address = bus.read16(registers.PC);
+    bus.write16(address, registers.A);
+    registers.PC += 2;
+}
+
+void CPU::STS()
+{
+    auto address = bus.read16(registers.PC);
+    auto value = bus.read16(registers.SP);
+    bus.write16(address, value);
+    registers.SP += 2;
+    registers.PC += 2;
 }
 
 void CPU::INC()
