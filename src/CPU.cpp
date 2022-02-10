@@ -22,6 +22,8 @@ CPU::CPU()
     opcode_t[Instructions::STS] = &CPU::STS;
     opcode_t[Instructions::INC] = &CPU::INC;
     opcode_t[Instructions::DEC] = &CPU::DEC;
+    opcode_t[Instructions::SHL] = &CPU::SHL;
+    opcode_t[Instructions::SHR] = &CPU::SHR;
     opcode_t[Instructions::PSH] = &CPU::PSH;
     opcode_t[Instructions::POP] = &CPU::POP;
     opcode_t[Instructions::RET] = &CPU::RET;
@@ -145,6 +147,19 @@ void CPU::INC()
 void CPU::DEC()
 {
     registers.A--;
+}
+
+void CPU::SHL()
+{
+    auto value = bus.read8(registers.PC++);
+    printf("SHL %02X\n", value);
+    registers.A <<= value;
+}
+
+void CPU::SHR()
+{
+    auto value = bus.read8(registers.PC++);
+    registers.A >>= value;
 }
 
 void CPU::PSH()

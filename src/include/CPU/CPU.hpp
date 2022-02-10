@@ -32,6 +32,8 @@ private:
     void STS();
     void INC();
     void DEC();
+    void SHL();
+    void SHR();
     void PSH();
     void POP();
     void RET();

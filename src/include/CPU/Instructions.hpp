@@ -12,6 +12,8 @@ enum class Instructions : std::uint8_t
     STS,
     INC,
     DEC,
+    SHL,
+    SHR,
     PSH,
     POP,
     RET,
