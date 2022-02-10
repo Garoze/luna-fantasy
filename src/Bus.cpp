@@ -24,7 +24,7 @@ std::uint16_t Bus::read16(std::uint16_t address)
 
 void Bus::debugMemory(std::uint16_t address, int offset)
 {
-    for (std::uint16_t i = 0; i <= offset; ++i)
+    for (std::uint16_t i = 1; i <= offset; ++i)
     {
         memory.viewAt(address);
         address += 16;
