@@ -30,6 +30,9 @@ private:
     void LDS();
     void STA();
     void STS();
+    void ADD();
+    void ADA();
+    void ADS();
     void INC();
     void DEC();
     void SHL();
