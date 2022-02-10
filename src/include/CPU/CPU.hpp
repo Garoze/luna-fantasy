@@ -34,6 +34,10 @@ private:
     void DEC();
     void SHL();
     void SHR();
+    void AND();
+    void BOR();
+    void XOR();
+    void NOT();
     void PSH();
     void POP();
     void RET();

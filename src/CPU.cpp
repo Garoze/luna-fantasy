@@ -25,6 +25,10 @@ CPU::CPU()
     opcode_t[Instructions::SHL] = &CPU::SHL;
     opcode_t[Instructions::SHR] = &CPU::SHR;
     opcode_t[Instructions::PSH] = &CPU::PSH;
+    opcode_t[Instructions::AND] = &CPU::AND;
+    opcode_t[Instructions::BOR] = &CPU::BOR;
+    opcode_t[Instructions::XOR] = &CPU::XOR;
+    opcode_t[Instructions::NOT] = &CPU::NOT;
     opcode_t[Instructions::POP] = &CPU::POP;
     opcode_t[Instructions::RET] = &CPU::RET;
     opcode_t[Instructions::HLT] = &CPU::HLT;
@@ -161,6 +165,32 @@ void CPU::SHR()
     registers.A >>= value;
 }
 
+void CPU::AND()
+{
+     auto value = bus.read16(registers.PC);
+     registers.A &= value;
+     registers.PC += 2;
+}
+
+void CPU::BOR()
+{
+    auto value = bus.read16(registers.PC);
+    registers.A |= value;
+    registers.PC += 2;
+}
+
+void CPU::XOR()
+{
+    auto value = bus.read16(registers.PC);
+    registers.A ^= value;
+    registers.PC += 2;
+}
+
+void CPU::NOT()
+{
+    registers.A = ~registers.A;
+}
+
 void CPU::PSH()
 {
     registers.SP -= 2;
@@ -178,7 +208,7 @@ void CPU::POP()
 
 void CPU::RET()
 {
-    printf("Register A: %02X\n", registers.A);
+    printf("Register A: %04X\n", registers.A);
 }
 
 void CPU::HLT()
