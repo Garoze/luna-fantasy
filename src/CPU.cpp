@@ -152,7 +152,6 @@ void CPU::DEC()
 void CPU::SHL()
 {
     auto value = bus.read8(registers.PC++);
-    printf("SHL %02X\n", value);
     registers.A <<= value;
 }
 
