@@ -8,6 +8,8 @@
 #define STACK_START   0xFFFF
 #define PROGRAM_START 0x0000
 
+#define validOpcode(o) (opcode_t.count((Instructions)o) > 0)
+
 CPU::CPU()
 {
     reset();
