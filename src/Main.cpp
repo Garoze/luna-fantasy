@@ -12,6 +12,8 @@ int main()
         (int)Instructions::PSH, 0xCD, 0xAB,
         (int)Instructions::LDA, 0xFD, 0xFF,
         (int)Instructions::RET,
+        (int)Instructions::INC,
+        (int)Instructions::RET,
         (int)Instructions::HLT,
     };
 

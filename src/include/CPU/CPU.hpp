@@ -28,6 +28,8 @@ private:
     void LDI();
     void LDA();
     void LDS();
+    void INC();
+    void DEC();
     void PSH();
     void POP();
     void RET();

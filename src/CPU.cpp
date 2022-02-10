@@ -18,6 +18,8 @@ CPU::CPU()
     opcode_t[Instructions::LDI] = &CPU::LDI;
     opcode_t[Instructions::LDA] = &CPU::LDA;
     opcode_t[Instructions::LDS] = &CPU::LDS;
+    opcode_t[Instructions::INC] = &CPU::INC;
+    opcode_t[Instructions::DEC] = &CPU::DEC;
     opcode_t[Instructions::PSH] = &CPU::PSH;
     opcode_t[Instructions::POP] = &CPU::POP;
     opcode_t[Instructions::RET] = &CPU::RET;
@@ -115,6 +117,16 @@ void CPU::LDS()
 {
     registers.A = bus.read16(registers.SP);
     registers.SP += 2;
+}
+
+void CPU::INC()
+{
+    registers.A++;
+}
+
+void CPU::DEC()
+{
+    registers.A--;
 }
 
 void CPU::PSH()
