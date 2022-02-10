@@ -16,6 +16,10 @@ CPU::CPU()
 
     opcode_t[Instructions::NOP] = &CPU::NOP;
     opcode_t[Instructions::LDI] = &CPU::LDI;
+    opcode_t[Instructions::LDA] = &CPU::LDA;
+    opcode_t[Instructions::LDS] = &CPU::LDS;
+    opcode_t[Instructions::PSH] = &CPU::PSH;
+    opcode_t[Instructions::POP] = &CPU::POP;
     opcode_t[Instructions::RET] = &CPU::RET;
     opcode_t[Instructions::HLT] = &CPU::HLT;
 }
@@ -98,6 +102,34 @@ void CPU::LDI()
     auto value = bus.read16(registers.PC);
     registers.A = value;
     registers.PC += 2;
+}
+
+void CPU::LDA()
+{
+    auto address = bus.read16(registers.PC);
+    registers.A = bus.read16(address);
+    registers.PC += 2;
+}
+
+void CPU::LDS()
+{
+    registers.A = bus.read16(registers.SP);
+    registers.SP += 2;
+}
+
+void CPU::PSH()
+{
+    registers.SP -= 2;
+    auto value = bus.read16(registers.PC);
+    bus.write16(registers.SP, value);
+    registers.PC += 2;
+}
+
+void CPU::POP()
+{
+    // TODO: Find a better way to deal with the return value.
+    registers.A = bus.read16(registers.SP);
+    registers.SP += 2;
 }
 
 void CPU::RET()

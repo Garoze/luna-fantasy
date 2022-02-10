@@ -26,6 +26,10 @@ private:
 private:
     void NOP();
     void LDI();
+    void LDA();
+    void LDS();
+    void PSH();
+    void POP();
     void RET();
     void HLT();
 private:
