@@ -11,10 +11,10 @@ class Memory
 public:
     Memory() {};
 
-    void viewAt(std::uint16_t& address)
+    void viewAt(std::uint16_t address)
     {
         printf("0x%04X: ", address);
-        for (int i = 1; i <= 10; ++i)
+        for (int i = 1; i <= 16; ++i)
         {
             printf("%02X ", data[address++]);
         }
