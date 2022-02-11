@@ -51,6 +51,7 @@ CPU::CPU()
     opcode_t[Instructions::CMA] = &CPU::CMA;
     opcode_t[Instructions::CMS] = &CPU::CMS;
     opcode_t[Instructions::JMP] = &CPU::JMP;
+    opcode_t[Instructions::JMZ] = &CPU::JMZ;
     opcode_t[Instructions::JNZ] = &CPU::JNZ;
     opcode_t[Instructions::CAL] = &CPU::CAL;
     opcode_t[Instructions::RET] = &CPU::RET;
@@ -370,6 +371,14 @@ void CPU::JNZ()
     auto address = bus.read16(registers.PC);
     registers.PC += 2;
     if (registers.A != 0)
+        registers.PC = address;
+}
+
+void CPU::JMZ()
+{
+    auto address = bus.read16(registers.PC);
+    registers.PC += 2;
+    if (registers.A == 0)
         registers.PC = address;
 }
 

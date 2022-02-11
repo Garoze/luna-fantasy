@@ -20,7 +20,7 @@ enum class Instructions : std::uint8_t
     BOR, XOR, NOT,
     PSH, POP,
     CMP, CMA, CMS,
-    JMP, JNZ,
+    JMP, JMZ, JNZ,
     CAL, RET,
     OUT,
     HLT
@@ -62,6 +62,7 @@ static const std::map<Instructions, std::string> Instruction_t = {
     std::make_pair(Instructions::CMA, "CMA"),
     std::make_pair(Instructions::CMS, "CMS"),
     std::make_pair(Instructions::JMP, "JMP"),
+    std::make_pair(Instructions::JMZ, "JMZ"),
     std::make_pair(Instructions::JNZ, "JNZ"),
     std::make_pair(Instructions::CAL, "CAL"),
     std::make_pair(Instructions::RET, "RET"),

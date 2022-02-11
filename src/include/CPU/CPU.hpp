@@ -61,6 +61,7 @@ private:
     void CMA();
     void CMS();
     void JMP();
+    void JMZ();
     void JNZ();
     void CAL();
     void RET();
