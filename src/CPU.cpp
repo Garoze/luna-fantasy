@@ -151,9 +151,8 @@ void CPU::LDI()
 
 void CPU::LDA()
 {
-    auto address = bus.read16(registers.PC);
+    auto address = fetch16();
     registers.A = bus.read16(address);
-    registers.PC += 2;
 }
 
 void CPU::LDS()
