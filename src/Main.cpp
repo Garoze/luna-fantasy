@@ -9,10 +9,10 @@ int main()
     CPU cpu;
 
     const std::vector<std::uint8_t> code = {
-        (int)Instructions::PSH, 0xCD, 0xAB,
-        (int)Instructions::LDI, 0x00, 0x00,
+        (int)Instructions::PSH, 0xFF, 0x00,
+        (int)Instructions::LDI, 0xFF, 0xFF,
         (int)Instructions::RET,
-        (int)Instructions::ADS,
+        (int)Instructions::SUS,
         (int)Instructions::RET,
         (int)Instructions::HLT,
     };

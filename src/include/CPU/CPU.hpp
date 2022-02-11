@@ -33,6 +33,9 @@ private:
     void ADD();
     void ADA();
     void ADS();
+    void SUB();
+    void SUA();
+    void SUS();
     void INC();
     void DEC();
     void SHL();

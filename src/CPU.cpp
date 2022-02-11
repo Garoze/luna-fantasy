@@ -23,6 +23,9 @@ CPU::CPU()
     opcode_t[Instructions::ADD] = &CPU::ADD;
     opcode_t[Instructions::ADA] = &CPU::ADA;
     opcode_t[Instructions::ADS] = &CPU::ADS;
+    opcode_t[Instructions::SUB] = &CPU::SUB;
+    opcode_t[Instructions::SUA] = &CPU::SUA;
+    opcode_t[Instructions::SUS] = &CPU::SUS;
     opcode_t[Instructions::INC] = &CPU::INC;
     opcode_t[Instructions::DEC] = &CPU::DEC;
     opcode_t[Instructions::SHL] = &CPU::SHL;
@@ -164,6 +167,27 @@ void CPU::ADS()
 {
     auto value = bus.read16(registers.SP);
     registers.A += value;
+    registers.SP += 2;
+}
+
+void CPU::SUB()
+{
+    auto value = bus.read16(registers.PC);
+    registers.A -= value;
+    registers.PC += 2;
+}
+
+void CPU::SUA()
+{
+    auto address = bus.read16(registers.PC);
+    registers.A -= bus.read16(address);
+    registers.PC += 2;
+}
+
+void CPU::SUS()
+{
+    auto value = bus.read16(registers.SP);
+    registers.A -= value;
     registers.SP += 2;
 }
 
