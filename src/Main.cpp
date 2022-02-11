@@ -12,7 +12,7 @@ int main()
         (int)Instructions::PSH, 0x02, 0x00,
         (int)Instructions::LDI, 0x0A, 0x00,
         (int)Instructions::RET,
-        (int)Instructions::DIS,
+        (int)Instructions::MUS,
         (int)Instructions::RET,
         (int)Instructions::HLT,
     };
