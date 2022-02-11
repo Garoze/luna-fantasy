@@ -9,10 +9,11 @@ int main()
     CPU cpu;
 
     const std::vector<std::uint8_t> code = {
-        (int)Instructions::CAL, 0x05, 0x00,
+        (int)Instructions::LDI, 0x05, 0x00,
+        (int)Instructions::SUB, 0x01, 0x00,
+        (int)Instructions::OUT,
+        (int)Instructions::JNZ, 0x03, 0x00,
         (int)Instructions::HLT,
-        (int)Instructions::NOP,
-        (int)Instructions::RET,
     };
 
     cpu.loadToMemory(code);
