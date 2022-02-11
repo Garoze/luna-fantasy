@@ -146,9 +146,7 @@ void CPU::NOP() {}
 
 void CPU::LDI()
 {
-    auto value = bus.read16(registers.PC);
-    registers.A = value;
-    registers.PC += 2;
+    registers.A = fetch16();
 }
 
 void CPU::LDA()
