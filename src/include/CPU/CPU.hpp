@@ -6,7 +6,8 @@
 
 #include "Flags.hpp"
 #include "Registers.hpp"
-#include "Instructions.hpp"
+#include "Instructions/Mnemonics.hpp"
+#include "Instructions/Instructions.hpp"
 
 #include "../Bus/Bus.hpp"
 

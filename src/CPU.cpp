@@ -136,7 +136,7 @@ void CPU::step()
         opcode = fetch8();
         printf("PC: %04X ", registers.PC);
         instruction = decode(opcode);
-        printf("Opcode: %02X Mnemonic: %s\t", opcode, Instruction_t.at(instruction).c_str());
+        printf("Opcode: %02X Mnemonic: %s\t", opcode, Mnemonic_t.at(instruction).c_str());
         execute(instruction);
     }
     while(std::cin.get() != 'q');
