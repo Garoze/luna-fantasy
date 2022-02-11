@@ -36,6 +36,9 @@ private:
     void SUB();
     void SUA();
     void SUS();
+    void DIV();
+    void DIA();
+    void DIS();
     void INC();
     void DEC();
     void SHL();
