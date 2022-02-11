@@ -78,10 +78,9 @@ void CPU::reset()
 
 void CPU::loadToMemory(const std::vector<std::uint8_t>& code)
 {
-    auto PC = registers.PC;
     for (std::size_t i = 0; i < code.size(); ++i)
     {
-        bus.write8(PC + i, code.at(i));
+        bus.write8(registers.PC + i, code.at(i));
     }
 }
 
@@ -90,13 +89,42 @@ void CPU::debugMemory(std::uint16_t address, int offset)
     bus.debugMemory(address, offset);
 }
 
+void CPU::executeCycle()
+{
+    opcode = fetch8();
+    instruction = decode(opcode);
+    execute(instruction);
+}
+
+std::uint8_t  CPU::fetch8()
+{
+    return bus.read8(registers.PC++);
+}
+
+std::uint16_t CPU::fetch16()
+{
+    auto value = bus.read16(registers.PC);
+    registers.PC += 2;
+    return value;
+}
+
+Instructions CPU::decode(std::uint8_t opcode)
+{
+    return (Instructions)opcode;
+}
+
+void CPU::execute(Instructions inst)
+{
+    if (validOpcode(inst))
+        (this->*opcode_t[inst])();
+    else
+        printf("[ Execute ] -> Invalid Opcode: %02hhX\n", inst);
+}
 void CPU::run()
 {
     while (status.running)
     {
-        fetch();
-        decode();
-        execute();
+        executeCycle();
     }
 }
 
@@ -104,32 +132,14 @@ void CPU::step()
 {
     do
     {
-        printf("[ DEBUG ] Step -> ");
-        fetch();
+        printf("[ DEBUG ] step -> ");
+        opcode = fetch8();
         printf("PC: %04X ", registers.PC);
-        decode();
-        printf("Opcode: %02hhX Inst: %s\t", instruction, Instruction_t.at(instruction).c_str());
-        execute();
+        instruction = decode(opcode);
+        printf("Opcode: %02X Mnemonic: %s\t", opcode, Instruction_t.at(instruction).c_str());
+        execute(instruction);
     }
     while(std::cin.get() != 'q');
-}
-
-void CPU::fetch()
-{
-   opcode = bus.read8(registers.PC++);
-}
-
-void CPU::decode()
-{
-    instruction = (Instructions)opcode;
-}
-
-void CPU::execute()
-{
-    if (validOpcode(instruction))
-        (this->*opcode_t[instruction])();
-    else
-        printf("[ Execute ] -> Invalid Opcode: %02hhX\n", instruction);
 }
 
 void CPU::NOP() {}
@@ -406,11 +416,5 @@ void CPU::OUT()
 void CPU::HLT()
 {
     status.running = false;
-}
-
-void CPU::debugFlags(const std::string& s)
-{
-    if (s == "Z" || s == "z")
-        printf("Flag Z: %d\n", flags.Z);
 }
 

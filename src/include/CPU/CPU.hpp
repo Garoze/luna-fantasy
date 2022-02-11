@@ -18,13 +18,15 @@ public:
     void run();
     void step();
     void reset();
+public:
+    void executeCycle();
     void loadToMemory(const std::vector<std::uint8_t>&);
     void debugMemory(std::uint16_t address, int offset = 20);
-    void debugFlags(const std::string&);
 private:
-    void fetch();
-    void decode();
-    void execute();
+    std::uint8_t  fetch8();
+    std::uint16_t fetch16();
+    Instructions decode(std::uint8_t opcode);
+    void execute(Instructions inst);
 private:
     void NOP();
     void LDI();
