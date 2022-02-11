@@ -253,23 +253,21 @@ void CPU::DIS()
 
 void CPU::MOD()
 {
-    auto value = bus.read16(registers.PC);
+    auto value = fetch16();
     registers.A %= value;
-    registers.PC += 2;
 }
 
 void CPU::MOA()
 {
-    auto address = bus.read16(registers.PC);
+    auto address = fetch16();
     registers.A %= bus.read16(address);
-    registers.PC += 2;
 }
 
 void CPU::MOS()
 {
     auto value = bus.read16(registers.SP);
-    registers.A %= value;
     registers.SP += 2;
+    registers.A %= value;
 }
 
 void CPU::INC()
