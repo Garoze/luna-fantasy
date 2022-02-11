@@ -42,6 +42,9 @@ private:
     void DIV();
     void DIA();
     void DIS();
+    void MOD();
+    void MOA();
+    void MOS();
     void INC();
     void DEC();
     void SHL();

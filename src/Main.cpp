@@ -10,9 +10,9 @@ int main()
 
     const std::vector<std::uint8_t> code = {
         (int)Instructions::PSH, 0x02, 0x00,
-        (int)Instructions::LDI, 0x0A, 0x00,
+        (int)Instructions::LDI, 0x05, 0x00,
         (int)Instructions::RET,
-        (int)Instructions::MUS,
+        (int)Instructions::MOS,
         (int)Instructions::RET,
         (int)Instructions::HLT,
     };

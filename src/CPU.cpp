@@ -32,6 +32,9 @@ CPU::CPU()
     opcode_t[Instructions::DIV] = &CPU::DIV;
     opcode_t[Instructions::DIA] = &CPU::DIA;
     opcode_t[Instructions::DIS] = &CPU::DIS;
+    opcode_t[Instructions::MOD] = &CPU::MOD;
+    opcode_t[Instructions::MOA] = &CPU::MOA;
+    opcode_t[Instructions::MOS] = &CPU::MOS;
     opcode_t[Instructions::INC] = &CPU::INC;
     opcode_t[Instructions::DEC] = &CPU::DEC;
     opcode_t[Instructions::SHL] = &CPU::SHL;
@@ -236,6 +239,27 @@ void CPU::DIS()
 {
     auto value = bus.read16(registers.SP);
     registers.A /= value;
+    registers.SP += 2;
+}
+
+void CPU::MOD()
+{
+    auto value = bus.read16(registers.PC);
+    registers.A %= value;
+    registers.PC += 2;
+}
+
+void CPU::MOA()
+{
+    auto address = bus.read16(registers.PC);
+    registers.A %= bus.read16(address);
+    registers.PC += 2;
+}
+
+void CPU::MOS()
+{
+    auto value = bus.read16(registers.SP);
+    registers.A %= value;
     registers.SP += 2;
 }
 
