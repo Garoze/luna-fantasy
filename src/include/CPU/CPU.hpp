@@ -62,6 +62,7 @@ private:
     void CMS();
     void JMP();
     void JMA();
+    void CAL();
     void RET();
     void OUT();
     void HLT();

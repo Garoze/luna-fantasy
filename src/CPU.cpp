@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <string>
 #include <cstdio>
 #include <iostream>
 
@@ -40,17 +41,17 @@ CPU::CPU()
     opcode_t[Instructions::DEC] = &CPU::DEC;
     opcode_t[Instructions::SHL] = &CPU::SHL;
     opcode_t[Instructions::SHR] = &CPU::SHR;
-    opcode_t[Instructions::PSH] = &CPU::PSH;
     opcode_t[Instructions::AND] = &CPU::AND;
     opcode_t[Instructions::BOR] = &CPU::BOR;
     opcode_t[Instructions::XOR] = &CPU::XOR;
     opcode_t[Instructions::NOT] = &CPU::NOT;
+    opcode_t[Instructions::PSH] = &CPU::PSH;
     opcode_t[Instructions::POP] = &CPU::POP;
     opcode_t[Instructions::CMP] = &CPU::CMP;
     opcode_t[Instructions::CMA] = &CPU::CMA;
     opcode_t[Instructions::CMS] = &CPU::CMS;
     opcode_t[Instructions::JMP] = &CPU::JMP;
-    opcode_t[Instructions::JMA] = &CPU::JMA;
+    opcode_t[Instructions::CAL] = &CPU::CAL;
     opcode_t[Instructions::RET] = &CPU::RET;
     opcode_t[Instructions::OUT] = &CPU::OUT;
     opcode_t[Instructions::HLT] = &CPU::HLT;
@@ -99,12 +100,55 @@ void CPU::run()
 
 void CPU::step()
 {
+    std::map<Instructions, std::string> inst_t;
+    inst_t[Instructions::NOP] = "NOP";
+    inst_t[Instructions::LDI] = "LDI";
+    inst_t[Instructions::LDA] = "LDA";
+    inst_t[Instructions::LDS] = "LDS";
+    inst_t[Instructions::STA] = "STA";
+    inst_t[Instructions::STS] = "STS";
+    inst_t[Instructions::ADD] = "ADD",
+    inst_t[Instructions::ADA] = "ADA";
+    inst_t[Instructions::ADS] = "ADS";
+    inst_t[Instructions::SUB] = "SUB";
+    inst_t[Instructions::SUA] = "SUA";
+    inst_t[Instructions::SUS] = "SUS";
+    inst_t[Instructions::MUL] = "MUL";
+    inst_t[Instructions::MUA] = "MUA";
+    inst_t[Instructions::MUS] = "MUS";
+    inst_t[Instructions::DIV] = "DIV";
+    inst_t[Instructions::DIA] = "DIA";
+    inst_t[Instructions::DIS] = "DIS";
+    inst_t[Instructions::MOD] = "MOD";
+    inst_t[Instructions::MOA] = "MOA";
+    inst_t[Instructions::MOS] = "MOS";
+    inst_t[Instructions::INC] = "INC";
+    inst_t[Instructions::DEC] = "DEC";
+    inst_t[Instructions::SHL] = "SHL";
+    inst_t[Instructions::SHR] = "SHR";
+    inst_t[Instructions::AND] = "AND";
+    inst_t[Instructions::BOR] = "BOR";
+    inst_t[Instructions::XOR] = "XOR";
+    inst_t[Instructions::NOT] = "NOT";
+    inst_t[Instructions::PSH] = "PSH";
+    inst_t[Instructions::POP] = "POP";
+    inst_t[Instructions::CMP] = "CMP";
+    inst_t[Instructions::CMA] = "CMA";
+    inst_t[Instructions::CMS] = "CMS";
+    inst_t[Instructions::JMP] = "JMP";
+    inst_t[Instructions::CAL] = "CAL";
+    inst_t[Instructions::RET] = "RET";
+    inst_t[Instructions::OUT] = "OUT";
+    inst_t[Instructions::HLT] = "HLT";
+
     do
     {
+        printf("[ DEBUG ] Step -> ");
         fetch();
+        printf("PC: %04X ", registers.PC);
         decode();
+        printf("Opcode: %02hhX Inst: %s\t", instruction, inst_t[instruction].c_str());
         execute();
-        printf("[ DEBUG ] Step -> PC: %02hX Opcode: %02hX\t", registers.PC, instruction);
     }
     while(std::cin.get() != 'q');
 }
@@ -361,6 +405,14 @@ void CPU::JMP()
     registers.PC = address;
 }
 
+void CPU::CAL()
+{
+    registers.SP -= 2;
+    auto address = bus.read16(registers.PC);
+    bus.write16(registers.SP, registers.PC);
+    registers.PC = address;
+}
+
 void CPU::RET()
 {
     auto address = bus.read16(registers.SP);
@@ -370,7 +422,7 @@ void CPU::RET()
 
 void CPU::OUT()
 {
-    printf("Register A: %04X\n", registers.A);
+    printf("\nRegister A: %04X", registers.A);
 }
 
 void CPU::HLT()

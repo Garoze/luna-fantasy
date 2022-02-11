@@ -17,7 +17,7 @@ enum class Instructions : std::uint8_t
     BOR, XOR, NOT,
     PSH, POP,
     CMP, CMA, CMS,
-    JMP, RET,
+    JMP, CAL, RET,
     OUT,
     HLT
 };
