@@ -282,35 +282,32 @@ void CPU::DEC()
 
 void CPU::SHL()
 {
-    auto value = bus.read8(registers.PC++);
+    auto value = fetch16();
     registers.A <<= value;
 }
 
 void CPU::SHR()
 {
-    auto value = bus.read8(registers.PC++);
+    auto value = fetch16();
     registers.A >>= value;
 }
 
 void CPU::AND()
 {
-     auto value = bus.read16(registers.PC);
-     registers.A &= value;
-     registers.PC += 2;
+    auto value = fetch16();
+    registers.A &= value;
 }
 
 void CPU::BOR()
 {
-    auto value = bus.read16(registers.PC);
+    auto value = fetch16();
     registers.A |= value;
-    registers.PC += 2;
 }
 
 void CPU::XOR()
 {
-    auto value = bus.read16(registers.PC);
+    auto value = fetch16();
     registers.A ^= value;
-    registers.PC += 2;
 }
 
 void CPU::NOT()
