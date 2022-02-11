@@ -49,7 +49,10 @@ CPU::CPU()
     opcode_t[Instructions::CMP] = &CPU::CMP;
     opcode_t[Instructions::CMA] = &CPU::CMA;
     opcode_t[Instructions::CMS] = &CPU::CMS;
+    opcode_t[Instructions::JMP] = &CPU::JMP;
+    opcode_t[Instructions::JMA] = &CPU::JMA;
     opcode_t[Instructions::RET] = &CPU::RET;
+    opcode_t[Instructions::OUT] = &CPU::OUT;
     opcode_t[Instructions::HLT] = &CPU::HLT;
 }
 
@@ -323,6 +326,13 @@ void CPU::PSH()
     registers.PC += 2;
 }
 
+void CPU::POP()
+{
+    // TODO: Find a better way to deal with the return value.
+    registers.A = bus.read16(registers.SP);
+    registers.SP += 2;
+}
+
 void CPU::CMP()
 {
     auto value = bus.read16(registers.PC);
@@ -345,14 +355,20 @@ void CPU::CMS()
     registers.SP += 2;
 }
 
-void CPU::POP()
+void CPU::JMP()
 {
-    // TODO: Find a better way to deal with the return value.
-    registers.A = bus.read16(registers.SP);
-    registers.SP += 2;
+    auto address = bus.read16(registers.PC);
+    registers.PC = address;
 }
 
 void CPU::RET()
+{
+    auto address = bus.read16(registers.SP);
+    registers.PC = address;
+    registers.SP += 2;
+}
+
+void CPU::OUT()
 {
     printf("Register A: %04X\n", registers.A);
 }

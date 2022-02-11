@@ -60,7 +60,10 @@ private:
     void CMP();
     void CMA();
     void CMS();
+    void JMP();
+    void JMA();
     void RET();
+    void OUT();
     void HLT();
 private:
     Bus bus;
