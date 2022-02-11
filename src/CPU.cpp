@@ -282,13 +282,13 @@ void CPU::DEC()
 
 void CPU::SHL()
 {
-    auto value = fetch16();
+    auto value = fetch8();
     registers.A <<= value;
 }
 
 void CPU::SHR()
 {
-    auto value = fetch16();
+    auto value = fetch8();
     registers.A >>= value;
 }
 
@@ -317,10 +317,9 @@ void CPU::NOT()
 
 void CPU::PSH()
 {
+    auto value = fetch16();
     registers.SP -= 2;
-    auto value = bus.read16(registers.PC);
     bus.write16(registers.SP, value);
-    registers.PC += 2;
 }
 
 void CPU::POP()
