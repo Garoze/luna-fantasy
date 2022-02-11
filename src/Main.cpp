@@ -9,20 +9,16 @@ int main()
     CPU cpu;
 
     const std::vector<std::uint8_t> code = {
-        (int)Instructions::PSH, 0xCD, 0xAB,
-        (int)Instructions::LDS,
-        (int)Instructions::OUT,
+        (int)Instructions::CAL, 0x05, 0x00,
         (int)Instructions::HLT,
+        (int)Instructions::NOP,
+        (int)Instructions::RET,
     };
 
     cpu.loadToMemory(code);
     cpu.step();
-    // cpu.run();
-    // cpu.debugFlags("z");
-    printf("Main Memory:\n");
-    cpu.debugMemory(0x0000, 5);
-    // printf("Stack Memory:\n");
-    // cpu.debugMemory(0xFFFF, 5);
+    printf("\nMain Memory:\n");
+    cpu.debugMemory(0x0000, 2);
 
     return EXIT_SUCCESS;
 }

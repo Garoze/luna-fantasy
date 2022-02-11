@@ -100,54 +100,13 @@ void CPU::run()
 
 void CPU::step()
 {
-    std::map<Instructions, std::string> inst_t;
-    inst_t[Instructions::NOP] = "NOP";
-    inst_t[Instructions::LDI] = "LDI";
-    inst_t[Instructions::LDA] = "LDA";
-    inst_t[Instructions::LDS] = "LDS";
-    inst_t[Instructions::STA] = "STA";
-    inst_t[Instructions::STS] = "STS";
-    inst_t[Instructions::ADD] = "ADD",
-    inst_t[Instructions::ADA] = "ADA";
-    inst_t[Instructions::ADS] = "ADS";
-    inst_t[Instructions::SUB] = "SUB";
-    inst_t[Instructions::SUA] = "SUA";
-    inst_t[Instructions::SUS] = "SUS";
-    inst_t[Instructions::MUL] = "MUL";
-    inst_t[Instructions::MUA] = "MUA";
-    inst_t[Instructions::MUS] = "MUS";
-    inst_t[Instructions::DIV] = "DIV";
-    inst_t[Instructions::DIA] = "DIA";
-    inst_t[Instructions::DIS] = "DIS";
-    inst_t[Instructions::MOD] = "MOD";
-    inst_t[Instructions::MOA] = "MOA";
-    inst_t[Instructions::MOS] = "MOS";
-    inst_t[Instructions::INC] = "INC";
-    inst_t[Instructions::DEC] = "DEC";
-    inst_t[Instructions::SHL] = "SHL";
-    inst_t[Instructions::SHR] = "SHR";
-    inst_t[Instructions::AND] = "AND";
-    inst_t[Instructions::BOR] = "BOR";
-    inst_t[Instructions::XOR] = "XOR";
-    inst_t[Instructions::NOT] = "NOT";
-    inst_t[Instructions::PSH] = "PSH";
-    inst_t[Instructions::POP] = "POP";
-    inst_t[Instructions::CMP] = "CMP";
-    inst_t[Instructions::CMA] = "CMA";
-    inst_t[Instructions::CMS] = "CMS";
-    inst_t[Instructions::JMP] = "JMP";
-    inst_t[Instructions::CAL] = "CAL";
-    inst_t[Instructions::RET] = "RET";
-    inst_t[Instructions::OUT] = "OUT";
-    inst_t[Instructions::HLT] = "HLT";
-
     do
     {
         printf("[ DEBUG ] Step -> ");
         fetch();
         printf("PC: %04X ", registers.PC);
         decode();
-        printf("Opcode: %02hhX Inst: %s\t", instruction, inst_t[instruction].c_str());
+        printf("Opcode: %02hhX Inst: %s\t", instruction, Instruction_t.at(instruction).c_str());
         execute();
     }
     while(std::cin.get() != 'q');
@@ -380,23 +339,23 @@ void CPU::POP()
 void CPU::CMP()
 {
     auto value = bus.read16(registers.PC);
-    flags.Z = (registers.A == value);
     registers.PC += 2;
+    flags.Z = (registers.A == value);
 }
 
 void CPU::CMA()
 {
     auto address = bus.read16(registers.PC);
+    registers.PC += 2;
     auto value = bus.read16(address);
     flags.Z = (registers.A == value);
-    registers.PC += 2;
 }
 
 void CPU::CMS()
 {
     auto value = bus.read16(registers.SP);
-    flags.Z = (registers.A == value);
     registers.SP += 2;
+    flags.Z = (registers.A == value);
 }
 
 void CPU::JMP()
@@ -407,8 +366,9 @@ void CPU::JMP()
 
 void CPU::CAL()
 {
-    registers.SP -= 2;
     auto address = bus.read16(registers.PC);
+    registers.PC += 2;
+    registers.SP -= 2;
     bus.write16(registers.SP, registers.PC);
     registers.PC = address;
 }
@@ -416,8 +376,8 @@ void CPU::CAL()
 void CPU::RET()
 {
     auto address = bus.read16(registers.SP);
-    registers.PC = address;
     registers.SP += 2;
+    registers.PC = address;
 }
 
 void CPU::OUT()
