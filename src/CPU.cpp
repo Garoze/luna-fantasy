@@ -215,23 +215,21 @@ void CPU::SUS()
 
 void CPU::MUL()
 {
-    auto value = bus.read16(registers.PC);
+    auto value = fetch16();
     registers.A *= value;
-    registers.PC += 2;
 }
 
 void CPU::MUA()
 {
-    auto address = bus.read16(registers.PC);
+    auto address = fetch16();
     registers.A *= bus.read16(address);
-    registers.PC += 2;
 }
 
 void CPU::MUS()
 {
     auto value = bus.read16(registers.SP);
-    registers.A *= value;
     registers.SP += 2;
+    registers.A *= value;
 }
 
 void CPU::DIV()
