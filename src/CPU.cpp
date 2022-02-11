@@ -163,18 +163,16 @@ void CPU::LDS()
 
 void CPU::STA()
 {
-    auto address = bus.read16(registers.PC);
+    auto address = fetch16();
     bus.write16(address, registers.A);
-    registers.PC += 2;
 }
 
 void CPU::STS()
 {
-    auto address = bus.read16(registers.PC);
+    auto address = fetch16();
     auto value = bus.read16(registers.SP);
-    bus.write16(address, value);
     registers.SP += 2;
-    registers.PC += 2;
+    bus.write16(address, value);
 }
 
 void CPU::ADD()
