@@ -9,10 +9,10 @@ int main()
     CPU cpu;
 
     const std::vector<std::uint8_t> code = {
-        (int)Instructions::PSH, 0x02, 0x00,
+        (int)Instructions::PSH, 0x05, 0x00,
         (int)Instructions::LDI, 0x05, 0x00,
         (int)Instructions::RET,
-        (int)Instructions::MOS,
+        (int)Instructions::CMS,
         (int)Instructions::RET,
         (int)Instructions::HLT,
     };
@@ -20,6 +20,7 @@ int main()
     cpu.loadToMemory(code);
     cpu.step();
     // cpu.run();
+    cpu.debugFlags("z");
     cpu.debugMemory(0x0000, 3);
     cpu.debugMemory(0xFFFD, 1);
 

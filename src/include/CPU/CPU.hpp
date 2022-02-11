@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <string>
 #include <vector>
 
 #include "Flags.hpp"
@@ -19,6 +20,7 @@ public:
     void reset();
     void loadToMemory(const std::vector<std::uint8_t>&);
     void debugMemory(std::uint16_t address, int offset = 20);
+    void debugFlags(const std::string&);
 private:
     void fetch();
     void decode();
@@ -55,6 +57,9 @@ private:
     void NOT();
     void PSH();
     void POP();
+    void CMP();
+    void CMA();
+    void CMS();
     void RET();
     void HLT();
 private:

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include <cstdio>
 #include <iostream>
 
@@ -45,6 +46,9 @@ CPU::CPU()
     opcode_t[Instructions::XOR] = &CPU::XOR;
     opcode_t[Instructions::NOT] = &CPU::NOT;
     opcode_t[Instructions::POP] = &CPU::POP;
+    opcode_t[Instructions::CMP] = &CPU::CMP;
+    opcode_t[Instructions::CMA] = &CPU::CMA;
+    opcode_t[Instructions::CMS] = &CPU::CMS;
     opcode_t[Instructions::RET] = &CPU::RET;
     opcode_t[Instructions::HLT] = &CPU::HLT;
 }
@@ -319,6 +323,28 @@ void CPU::PSH()
     registers.PC += 2;
 }
 
+void CPU::CMP()
+{
+    auto value = bus.read16(registers.PC);
+    flags.Z = (registers.A == value);
+    registers.PC += 2;
+}
+
+void CPU::CMA()
+{
+    auto address = bus.read16(registers.PC);
+    auto value = bus.read16(address);
+    flags.Z = (registers.A == value);
+    registers.PC += 2;
+}
+
+void CPU::CMS()
+{
+    auto value = bus.read16(registers.SP);
+    flags.Z = (registers.A == value);
+    registers.SP += 2;
+}
+
 void CPU::POP()
 {
     // TODO: Find a better way to deal with the return value.
@@ -334,5 +360,11 @@ void CPU::RET()
 void CPU::HLT()
 {
     status.running = false;
+}
+
+void CPU::debugFlags(const std::string& s)
+{
+    if (s == "Z" || s == "z")
+        printf("Flag Z: %d\n", flags.Z);
 }
 
