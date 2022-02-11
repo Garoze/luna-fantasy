@@ -331,15 +331,13 @@ void CPU::POP()
 
 void CPU::CMP()
 {
-    auto value = bus.read16(registers.PC);
-    registers.PC += 2;
+    auto value = fetch16();
     flags.Z = (registers.A == value);
 }
 
 void CPU::CMA()
 {
-    auto address = bus.read16(registers.PC);
-    registers.PC += 2;
+    auto address = fetch16();
     auto value = bus.read16(address);
     flags.Z = (registers.A == value);
 }
@@ -353,30 +351,27 @@ void CPU::CMS()
 
 void CPU::JMP()
 {
-    auto address = bus.read16(registers.PC);
+    auto address = fetch16();
     registers.PC = address;
 }
 
 void CPU::JNZ()
 {
-    auto address = bus.read16(registers.PC);
-    registers.PC += 2;
+    auto address = fetch16();
     if (registers.A != 0)
         registers.PC = address;
 }
 
 void CPU::JMZ()
 {
-    auto address = bus.read16(registers.PC);
-    registers.PC += 2;
+    auto address = fetch16();
     if (registers.A == 0)
         registers.PC = address;
 }
 
 void CPU::CAL()
 {
-    auto address = bus.read16(registers.PC);
-    registers.PC += 2;
+    auto address = fetch16();
     registers.SP -= 2;
     bus.write16(registers.SP, registers.PC);
     registers.PC = address;
