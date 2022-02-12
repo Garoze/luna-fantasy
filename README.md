@@ -11,7 +11,7 @@ Fantasy Console made in C++.
 ## Installation
 
 ```bash
-$ https://github.com/Garoze/cpu-emulation
+$ git clone https://github.com/Garoze/cpu-emulation
 $ cd cpu-emulation
 $ ./configure.sh
 $ make
