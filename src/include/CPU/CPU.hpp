@@ -22,6 +22,7 @@ public:
 public:
     void executeCycle();
     void loadToMemory(const std::vector<std::uint8_t>&);
+    void loadFromFile(const std::string&);
     void debugMemory(std::uint16_t address, int offset = 20);
 private:
     std::uint8_t  fetch8();

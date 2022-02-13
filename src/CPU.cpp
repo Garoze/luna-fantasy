@@ -3,6 +3,7 @@
 #include <map>
 #include <string>
 #include <cstdio>
+#include <fstream>
 #include <iostream>
 
 #include "include/CPU/CPU.hpp"
@@ -84,6 +85,30 @@ void CPU::loadToMemory(const std::vector<std::uint8_t>& code)
     }
 }
 
+void CPU::loadFromFile(const std::string& file_name)
+{
+    std::ifstream file(file_name, std::ios::binary | std::ios::in);
+
+    if (file.good())
+    {
+        file.seekg(0, std::ios::end);
+        size_t size = file.tellg();
+        file.seekg(0, std::ios::beg);
+
+        char* buffer = new char[size];
+
+        file.read(buffer, size);
+        file.close();
+
+        for (int i = 0; i < size; ++i)
+        {
+            bus.write8(registers.PC + i, buffer[i]);
+        }
+
+        delete[] buffer;
+    }
+}
+
 void CPU::debugMemory(std::uint16_t address, int offset)
 {
     bus.debugMemory(address, offset);
@@ -120,6 +145,7 @@ void CPU::execute(Instructions inst)
     else
         printf("[ Execute ] -> Invalid Opcode: %02hhX\n", inst);
 }
+
 void CPU::run()
 {
     while (status.running)
