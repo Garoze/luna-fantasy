@@ -1,6 +1,6 @@
-# Fantasy Console
+# Luna Fantasy
 
-Fantasy Console made in C++.
+Luna Fantasy is a 16bits Fantasy Console writen in C++.
 
 ## Table of Contents
 
