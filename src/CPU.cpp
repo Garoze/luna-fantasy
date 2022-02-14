@@ -77,14 +77,6 @@ void CPU::reset()
     status.running = true;
 }
 
-void CPU::loadToMemory(const std::vector<std::uint8_t>& code)
-{
-    for (std::size_t i = 0; i < code.size(); ++i)
-    {
-        bus.write8(registers.PC + i, code.at(i));
-    }
-}
-
 void CPU::loadFromFile(const std::string& file_name)
 {
     std::ifstream file(file_name, std::ios::binary | std::ios::in);
@@ -106,6 +98,14 @@ void CPU::loadFromFile(const std::string& file_name)
         }
 
         delete[] buffer;
+    }
+}
+
+void CPU::loadToMemory(const std::vector<std::uint8_t>& code)
+{
+    for (std::size_t i = 0; i < code.size(); ++i)
+    {
+        bus.write8(registers.PC + i, code.at(i));
     }
 }
 
