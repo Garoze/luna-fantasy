@@ -121,7 +121,7 @@ void CPU::executeCycle()
     execute(instruction);
 }
 
-std::uint8_t  CPU::fetch8()
+std::uint8_t CPU::fetch8()
 {
     return bus.read8(registers.PC++);
 }
