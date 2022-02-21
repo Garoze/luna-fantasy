@@ -8,7 +8,13 @@ int main()
 {
     CPU cpu;
 
-    cpu.loadFromFile("./__tests__/out.bin");
+    const std::vector<std::uint8_t> code = {
+        (int)Instructions::MOV, 0x01, 0xCD, 0xAB,
+        (int)Instructions::HLT,
+    };
+
+    // cpu.loadFromFile("./__tests__/out.bin");
+    cpu.loadToMemory(code);
     cpu.step();
     printf("\nMain Memory:\n");
     cpu.debugMemory(0x0000, 2);

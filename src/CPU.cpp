@@ -57,6 +57,7 @@ CPU::CPU()
     opcode_t[Instructions::CAL] = &CPU::CAL;
     opcode_t[Instructions::RET] = &CPU::RET;
     opcode_t[Instructions::OUT] = &CPU::OUT;
+    opcode_t[Instructions::MOV] = &CPU::MOV;
     opcode_t[Instructions::HLT] = &CPU::HLT;
 }
 
@@ -66,8 +67,9 @@ void CPU::reset()
     registers.PC = PROGRAM_START;
 
     registers.A = 0;
-    registers.X = 0;
-    registers.Y = 0;
+
+    for (int i = 0; i < 8; ++i)
+        registers.R[i] = 0;
 
     flags.C = 0;
     flags.N = 0;
@@ -413,6 +415,14 @@ void CPU::RET()
 void CPU::OUT()
 {
     printf("\nRegister A: %04X", registers.A);
+}
+
+void CPU::MOV()
+{
+    auto reg = fetch8();
+    auto value = fetch16();
+    registers.R[reg] = value;
+    printf("R%d: %04X\n", reg, registers.R[reg]);
 }
 
 void CPU::HLT()

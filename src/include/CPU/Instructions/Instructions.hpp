@@ -23,6 +23,7 @@ enum class Instructions : std::uint8_t
     JMP, JMZ, JNZ,
     CAL, RET,
     OUT,
+    MOV,
     HLT
 };
 

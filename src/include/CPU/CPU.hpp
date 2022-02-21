@@ -70,6 +70,7 @@ private:
     void CAL();
     void RET();
     void OUT();
+    void MOV();
     void HLT();
 private:
     Bus bus;
