@@ -57,7 +57,6 @@ CPU::CPU()
     opcode_t[Instructions::CAL] = &CPU::CAL;
     opcode_t[Instructions::RET] = &CPU::RET;
     opcode_t[Instructions::OUT] = &CPU::OUT;
-    opcode_t[Instructions::MOV] = &CPU::MOV;
     opcode_t[Instructions::HLT] = &CPU::HLT;
 }
 
@@ -68,8 +67,8 @@ void CPU::reset()
 
     registers.A = 0;
 
-    for (int i = 0; i < 8; ++i)
-        registers.R[i] = 0;
+    for (auto& r: registers.R)
+        r = 0;
 
     flags.C = 0;
     flags.N = 0;
@@ -174,18 +173,21 @@ void CPU::NOP() {}
 
 void CPU::LDI()
 {
-    registers.A = fetch16();
+    auto r = fetch8();
+    registers.R[r] = fetch16();
 }
 
 void CPU::LDA()
 {
+    auto r = fetch8();
     auto address = fetch16();
-    registers.A = bus.read16(address);
+    registers.R[r] = bus.read16(address);
 }
 
 void CPU::LDS()
 {
-    registers.A = bus.read16(registers.SP);
+    auto r = fetch8();
+    registers.R[r] = bus.read16(registers.SP);
     registers.SP += 2;
 }
 
@@ -414,15 +416,8 @@ void CPU::RET()
 
 void CPU::OUT()
 {
-    printf("\nRegister A: %04X", registers.A);
-}
-
-void CPU::MOV()
-{
-    auto reg = fetch8();
-    auto value = fetch16();
-    registers.R[reg] = value;
-    printf("R%d: %04X\n", reg, registers.R[reg]);
+    auto index = fetch8();
+    printf("R%d -> %04X", index, registers.R[index]);
 }
 
 void CPU::HLT()

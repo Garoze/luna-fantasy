@@ -46,6 +46,5 @@ static const std::map<Instructions, std::string> Mnemonic_t = {
     std::make_pair(Instructions::CAL, "CAL"),
     std::make_pair(Instructions::RET, "RET"),
     std::make_pair(Instructions::OUT, "OUT"),
-    std::make_pair(Instructions::MOV, "MOV"),
     std::make_pair(Instructions::HLT, "HLT"),
 };
