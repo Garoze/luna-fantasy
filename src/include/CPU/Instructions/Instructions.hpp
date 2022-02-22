@@ -9,7 +9,7 @@ enum class Instructions : std::uint8_t
 {
     NOP,
     LDI, LDA, LDS, LDR,
-    STA, STS,
+    STA, STR, STS,
     ADD, ADA, ADS,
     SUB, SUA, SUS,
     MUL, MUA, MUS,
@@ -18,7 +18,8 @@ enum class Instructions : std::uint8_t
     INC, DEC,
     SHL, SHR, AND,
     BOR, XOR, NOT,
-    PSH, POP,
+    PSA, PSI, PSR,
+    POA, POR,
     CMP, CMA, CMS,
     JMP, JMZ, JNZ,
     CAL, RET,

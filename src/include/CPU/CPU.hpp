@@ -36,6 +36,7 @@ private:
     void LDS();
     void LDR();
     void STA();
+    void STR();
     void STS();
     void ADD();
     void ADA();
@@ -60,8 +61,11 @@ private:
     void BOR();
     void XOR();
     void NOT();
-    void PSH();
-    void POP();
+    void PSA();
+    void PSI();
+    void PSR();
+    void POA();
+    void POR();
     void CMP();
     void CMA();
     void CMS();

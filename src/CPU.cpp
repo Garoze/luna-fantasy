@@ -23,6 +23,7 @@ CPU::CPU()
     opcode_t[Instructions::LDS] = &CPU::LDS;
     opcode_t[Instructions::LDR] = &CPU::LDR;
     opcode_t[Instructions::STA] = &CPU::STA;
+    opcode_t[Instructions::STR] = &CPU::STR;
     opcode_t[Instructions::STS] = &CPU::STS;
     opcode_t[Instructions::ADD] = &CPU::ADD;
     opcode_t[Instructions::ADA] = &CPU::ADA;
@@ -47,8 +48,11 @@ CPU::CPU()
     opcode_t[Instructions::BOR] = &CPU::BOR;
     opcode_t[Instructions::XOR] = &CPU::XOR;
     opcode_t[Instructions::NOT] = &CPU::NOT;
-    opcode_t[Instructions::PSH] = &CPU::PSH;
-    opcode_t[Instructions::POP] = &CPU::POP;
+    opcode_t[Instructions::PSA] = &CPU::PSA;
+    opcode_t[Instructions::PSI] = &CPU::PSI;
+    opcode_t[Instructions::PSR] = &CPU::PSR;
+    opcode_t[Instructions::POA] = &CPU::POA;
+    opcode_t[Instructions::POR] = &CPU::POR;
     opcode_t[Instructions::CMP] = &CPU::CMP;
     opcode_t[Instructions::CMA] = &CPU::CMA;
     opcode_t[Instructions::CMS] = &CPU::CMS;
@@ -192,15 +196,22 @@ void CPU::LDS()
 
 void CPU::LDR()
 {
-    auto dst = fetch8();
+    auto r = fetch8();
     auto src = fetch8();
-    registers.R[dst] = registers.R[src];
+    registers.R[r] = registers.R[src];
 }
 
 void CPU::STA()
 {
     auto address = fetch16();
     bus.write16(address, registers.A);
+}
+
+void CPU::STR()
+{
+    auto address = fetch16();
+    auto r = fetch8();
+    bus.write16(address, registers.R[r]);
 }
 
 void CPU::STS()
@@ -351,17 +362,36 @@ void CPU::NOT()
     registers.A = ~registers.A;
 }
 
-void CPU::PSH()
+void CPU::PSA()
+{
+    registers.SP -= 2;
+    bus.write16(registers.SP, registers.A);
+}
+
+void CPU::PSI()
 {
     auto value = fetch16();
     registers.SP -= 2;
     bus.write16(registers.SP, value);
 }
 
-void CPU::POP()
+void CPU::PSR()
 {
-    // TODO: Find a better way to deal with the return value.
+    auto r = fetch8();
+    registers.SP -= 2;
+    bus.write16(registers.SP, registers.R[r]);
+}
+
+void CPU::POA()
+{
     registers.A = bus.read16(registers.SP);
+    registers.SP += 2;
+}
+
+void CPU::POR()
+{
+    auto r = fetch8();
+    registers.R[r] = bus.read16(registers.SP);
     registers.SP += 2;
 }
 
@@ -422,12 +452,11 @@ void CPU::RET()
 
 void CPU::OUT()
 {
-    auto index = fetch8();
-    printf("R%d -> %04X", index, registers.R[index]);
+    auto r = fetch8();
+    printf("R%d -> %04X", r, registers.R[r]);
 }
 
 void CPU::HLT()
 {
     status.running = false;
 }
-
