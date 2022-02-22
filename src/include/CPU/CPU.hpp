@@ -30,6 +30,9 @@ private:
     Instructions decode(std::uint8_t opcode);
     void execute(Instructions inst);
 private:
+    void stackPush(std::uint16_t);
+    std::uint16_t stackPop();
+private:
     void NOP();
     void LDI();
     void LDA();

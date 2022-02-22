@@ -150,6 +150,19 @@ void CPU::execute(Instructions inst)
         printf("[ Execute ] -> Invalid Opcode: %02hhX\n", inst);
 }
 
+void CPU::stackPush(std::uint16_t value)
+{
+    registers.SP -= 2;
+    bus.write16(registers.SP, value);
+}
+
+std::uint16_t CPU::stackPop()
+{
+    auto value = bus.read16(registers.SP);
+    registers.SP += 2;
+    return value;
+}
+
 void CPU::run()
 {
     while (status.running)
@@ -364,35 +377,30 @@ void CPU::NOT()
 
 void CPU::PSA()
 {
-    registers.SP -= 2;
-    bus.write16(registers.SP, registers.A);
+    stackPush(registers.A);
 }
 
 void CPU::PSI()
 {
     auto value = fetch16();
-    registers.SP -= 2;
-    bus.write16(registers.SP, value);
+    stackPush(value);
 }
 
 void CPU::PSR()
 {
     auto r = fetch8();
-    registers.SP -= 2;
-    bus.write16(registers.SP, registers.R[r]);
+    stackPush(registers.R[r]);
 }
 
 void CPU::POA()
 {
-    registers.A = bus.read16(registers.SP);
-    registers.SP += 2;
+    registers.A = stackPop();
 }
 
 void CPU::POR()
 {
     auto r = fetch8();
-    registers.R[r] = bus.read16(registers.SP);
-    registers.SP += 2;
+    registers.R[r] = stackPop();
 }
 
 void CPU::CMP()
