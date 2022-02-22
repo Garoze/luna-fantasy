@@ -21,6 +21,7 @@ CPU::CPU()
     opcode_t[Instructions::LDI] = &CPU::LDI;
     opcode_t[Instructions::LDA] = &CPU::LDA;
     opcode_t[Instructions::LDS] = &CPU::LDS;
+    opcode_t[Instructions::LDR] = &CPU::LDR;
     opcode_t[Instructions::STA] = &CPU::STA;
     opcode_t[Instructions::STS] = &CPU::STS;
     opcode_t[Instructions::ADD] = &CPU::ADD;
@@ -66,9 +67,7 @@ void CPU::reset()
     registers.PC = PROGRAM_START;
 
     registers.A = 0;
-
-    for (auto& r: registers.R)
-        r = 0;
+    for (auto& r : registers.R) r = 0;
 
     flags.C = 0;
     flags.N = 0;
@@ -189,6 +188,13 @@ void CPU::LDS()
     auto r = fetch8();
     registers.R[r] = bus.read16(registers.SP);
     registers.SP += 2;
+}
+
+void CPU::LDR()
+{
+    auto dst = fetch8();
+    auto src = fetch8();
+    registers.R[dst] = registers.R[src];
 }
 
 void CPU::STA()

@@ -34,6 +34,7 @@ private:
     void LDI();
     void LDA();
     void LDS();
+    void LDR();
     void STA();
     void STS();
     void ADD();

@@ -10,6 +10,7 @@ static const std::map<Instructions, std::string> Mnemonic_t = {
     std::make_pair(Instructions::LDI, "LDI"),
     std::make_pair(Instructions::LDA, "LDA"),
     std::make_pair(Instructions::LDS, "LDS"),
+    std::make_pair(Instructions::LDR, "LDR"),
     std::make_pair(Instructions::STA, "STA"),
     std::make_pair(Instructions::STS, "STS"),
     std::make_pair(Instructions::ADD, "ADD"),

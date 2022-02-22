@@ -8,7 +8,7 @@
 enum class Instructions : std::uint8_t
 {
     NOP,
-    LDI, LDA, LDS,
+    LDI, LDA, LDS, LDR,
     STA, STS,
     ADD, ADA, ADS,
     SUB, SUA, SUS,
